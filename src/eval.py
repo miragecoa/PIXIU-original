@@ -8,6 +8,9 @@ from lm_eval import utils
 import evaluator
 from model_prompt import MODEL_PROMPT_MAP
 
+import multiprocessing as mp
+mp.set_start_method('spawn', force=True)
+
 logging.getLogger("openai").setLevel(logging.WARNING)
 
 def parse_args():

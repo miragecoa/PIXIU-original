@@ -1,0 +1,45 @@
+Hardware:
+- 9700X
+- RTX 5090
+
+Environment:
+- Python 3.12.12
+- CUDA 13.0 (Windows host)
+- WSL2 Ubuntu
+
+Key Dependencies:
+- torch==2.9.0
+- vllm==0.11.2
+- transformers==4.57.3
+- peft==0.18.0
+- accelerate==1.12.0
+- sentencepiece==0.2.1
+- numpy==1.26.4
+- pandas==2.3.3
+
+Installation Steps:
+
+git clone https://github.com/The-FinAI/PIXIU.git --recursive
+
+1. Create conda environment with Python 3.12:
+conda create -n pixiu python=3.12 -y
+conda activate pixiu
+
+2. Install vLLM for RTX 50xx series (incompatible when installed default):
+   Reference: https://discuss.vllm.ai/t/vllm-install-for-5090/1268
+
+pip install uv
+sudo apt-get install python3-dev  # For WSL Ubuntu
+uv pip install vllm --system
+python -c "import vllm; print('vLLM imported successfully!')"
+
+3. Install PIXIU dependencies:
+cd PIXIU
+pip install -r requirements.txt
+cd src/financial-evaluation
+pip install -e .[multilingual]
+
+Notes:
+- RTX 50xx series (Blackwell architecture, sm_120) requires PyTorch nightly with CUDA 12.8+
+- vLLM v0.11.2+ supports RTX 50 series out of the box
+- GPU memory utilization set to 0.8 to avoid OOM errors
